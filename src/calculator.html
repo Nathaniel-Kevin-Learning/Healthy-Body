@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="../Css/style.css" />
+    <link rel="stylesheet" href="../Css/output.css">
+    <link rel="icon" href="../picture/bmi.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 bg-cover" style="background-image: url(../picture/landscape-photography-tips-yosemite-valley-feature-1280x720.jpg);">
+    <!-- Navbar -->
+    <nav class="bg-green-500 p-4">
+      <div class="container mx-auto">
+        <div class="flex justify-between items-center">
+            <div class="flex space-x-3">
+                <img src="../picture/bmi.png" alt="logo" class="w-10 h-8"> </img>
+              <a href="http://127.0.0.1:5500/src/index.html" class="text-white font-bold text-xl">Healthy Body</a>
+            </div>
+          <ul class="flex space-x-4">
+            <li><a href="http://127.0.0.1:5500/src/index.html" class="text-white">Home</a></li>
+            <li><a href="http://127.0.0.1:5500/src/calculator.html" class="text-white">Calculator</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    
+    <!-- calculator section -->
+    <div class="flex">
+        <div class="container rounded-md mx-auto max-w-screen-md p-10 mt-10 mb-10 bg-gray-300 bg-opacity-80 w-full">
+            <h2 class="text-3xl font-bold mb-4 text-center">Input Section</h2>
+            <form class="max-w-lg mx-auto" id="data-form">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
+                    <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="age" class="block text-gray-700 font-bold mb-2">Age</label>
+                    <input type="number" id="age" name="age" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="weight" class="block text-gray-700 font-bold mb-2">Weight (kg)</label>
+                    <input type="number" id="weight" name="weight" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="height" class="block text-gray-700 font-bold mb-2">Height (cm)</label>
+                    <input type="number" id="height" name="height" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label for="gender" class="block text-gray-700 font-bold mb-2">Gender</label>
+                    <div class="relative">
+                        <select id="gender" name="gender" class="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                          </select>
+                    </div>
+                </div>
+                
+                <div class="flex mt-8 justify-center items-center w-full">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- History part -->
+    <div class="container rounded-md mx-auto max-w-screen-md p-10 mt-10 mb-10 bg-gray-300 bg-opacity-80">
+        <div class="flex">
+            <div class="justify-center items-center mb-4 w-3/4">
+                <label for="Search" class="block text-gray-700 font-bold mb-2">Search</label>
+                <input type="text" id="Search" name="Search" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Search Name">
+            </div>
+            <div class="flex w-1/4 justify-center items-center mt-2">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Search</button>
+            </div>
+            <div class="flex justify-center items-center mt-2">
+                <select class="w-28 h-10 ml-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value = "">BMI Order</option>
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                </select>
+            </div>
+        </div>
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="text-center">
+                <tr>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        Name
+                    </th>
+                    <th class="flex px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        BMI
+                        
+                    </th>
+                    <th class="px-8 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        Message
+                    </th>
+                    <th class="px-3 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                    <td class="px-6 py-4 whitespace-no-wrap">
+                        John Doe
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap">
+                        25.3
+                    </td>
+                    <td class="px-8 py-4 whitespace-wrap">
+                        from the data report that we got it is determined that you are overweight
+                    </td>
+                    <td class="flex px-3 py-4 whitespace-no-wrap">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Edit</button>
+                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                    </td>
+                </tr>
+                <!-- Additional rows can be added here -->
+            </tbody>
+        </table>
+    </div>
+    
+    
+    
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+      <div class="container mx-auto text-center">
+        <p>&copy; 2024 Healthy Body. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
