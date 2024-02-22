@@ -2,17 +2,22 @@ let index = localStorage.length;
 let error = false;
 
 let dataShow = [];
+// localStorage.removeItem("0");
+// localStorage.removeItem("1");
 
 function render() {
+  dataShow = [];
   for (let i = 0; i < localStorage.length; i++) {
     let key = localStorage.key(i);
     let value = localStorage.getItem(key);
+    value = JSON.parse(value);
+    // console.log(typeof value);
     dataShow.push(value);
   }
 }
 
 render();
-console.log(dataShow);
+// console.log(dataShow);
 
 // function to add into local storage
 function setObjectInLocalStorage(key, obj) {
@@ -70,7 +75,7 @@ function calculateBMI(age, weight, height, gender) {
         // healthy
         let messageResult = messageBMI[1];
         result.push(calculateBMI, messageResult);
-      } else if (weightData >= 80) {
+      } else if (weightData > 80) {
         // overweight
         let messageResult = messageBMI[2];
         result.push(calculateBMI, messageResult);
@@ -85,7 +90,7 @@ function calculateBMI(age, weight, height, gender) {
         // healthy
         let messageResult = messageBMI[1];
         result.push(calculateBMI, messageResult);
-      } else if (weightData >= 80) {
+      } else if (weightData > 80) {
         // overweight
         let messageResult = messageBMI[2];
         result.push(calculateBMI, messageResult);
@@ -242,9 +247,45 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("height").value = "";
       document.getElementById("gender").value = "";
       console.log(formDataObject);
+      cetakData();
     }
   }
+
+  cetakData();
+  // Delete Data jika kepanggil
+
+  // let buttonDelete = document.getElementById("deleteButton");
+  // buttonDelete.addEventListener("submit", deleteFunction);
+  // console.log(buttonDelete, "Delete Button");
 });
+
+// Testing print data
+function cetakData() {
+  document.getElementById("dataTable").innerHTML = "";
+  render();
+  console.log(dataShow, "< data show");
+  for (let i = 0; i < dataShow.length; i++) {
+    let data = dataShow[i];
+    console.log(data, "< data");
+    let Name = `<td class="px-6 py-4 whitespace-no-wrap">${data.name}</td>`;
+    let bmi = `<td>${data.bmi}</td>`;
+    let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
+    let btnAction = `<td class="flex px-3 py-4 whitespace-no-wrap">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
+    <button id="deleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="deleteFunction(${data.id})">Delete</button>
+    </td>`;
+
+    document.getElementById(
+      "dataTable"
+    ).innerHTML += `<tr>${Name}${bmi}${message}${btnAction}</tr>`;
+  }
+}
+
+function deleteFunction(id) {
+  localStorage.removeItem(id.toString());
+  render();
+  cetakData();
+}
 
 function getAllDataFromStorage() {
   let data = {};
@@ -256,11 +297,9 @@ function getAllDataFromStorage() {
   return data;
 }
 
-function cetak() {
-  document.getElementById("isi-data-table").innerHTML = "";
-}
+document.addEventListener("DOMContentLoaded", function () {});
 
-cetak();
+// cetak();
 
 // printing datanya
 // function printData(){
