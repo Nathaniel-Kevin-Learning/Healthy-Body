@@ -310,7 +310,7 @@ function cetakData() {
     let bmi = `<td class="px-3 py-2">${data.bmi}</td>`;
     let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
     let btnAction = `<td class="flex px-3 py-4 whitespace-no-wrap">
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
     <button id="deleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="deleteFunction(${data.id})">Delete</button>
     </td>`;
 
@@ -396,7 +396,7 @@ function sortingBy() {
       let bmi = `<td class="px-3 py-2">${data.bmi}</td>`;
       let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
       let btnAction = `<td class="flex px-3 py-4 whitespace-no-wrap">
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
     <button id="deleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="deleteFunction(${data.id})">Delete</button>
     </td>`;
 
@@ -427,7 +427,7 @@ function findName() {
       let bmi = `<td class="px-3 py-2">${data.bmi}</td>`;
       let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
       let btnAction = `<td class="flex px-3 py-4 whitespace-no-wrap">
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
     <button id="deleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="deleteFunction(${data.id})">Delete</button>
     </td>`;
       document.getElementById(
