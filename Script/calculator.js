@@ -15,7 +15,6 @@ function render() {
     let key = localStorage.key(i);
     let value = localStorage.getItem(key);
     value = JSON.parse(value);
-    // console.log(typeof value);
     dataShow.push(value);
   }
 }
@@ -33,10 +32,7 @@ function getMaxId() {
   return result;
 }
 
-console.log(getMaxId());
-
 render();
-// console.log(dataShow);
 
 // function to add into local storage
 function setObjectInLocalStorage(key, obj) {
@@ -121,7 +117,7 @@ function calculateBMI(age, weight, height, gender) {
       // {tinggi badan (cm) – 100} – {(tinggi badan (cm) – 100) x 10%}
       // todo ideal weight
       let idealWeightBMI = height - 100 - (height - 100) * 0.1;
-      // console.log(idealWeightBMI);
+
       if (calculateBMI < 18) {
         // underweight
         let messageResult =
@@ -148,7 +144,7 @@ function calculateBMI(age, weight, height, gender) {
       // {tinggi badan (cm) – 100} – {(tinggi badan (cm) - 100) x 15%}
       // todo ideal weight
       let idealWeightBMI = height - 100 - (height - 100) * 0.15;
-      // console.log(idealWeightBMI);
+
       if (calculateBMI < 18) {
         // underweight
         let messageResult =
@@ -177,15 +173,9 @@ function calculateBMI(age, weight, height, gender) {
   //? result output array [bmi number, message of the data]
 }
 
-// console.log(calculateBMI(21, 63, 180, "male"));
-
 document.addEventListener("DOMContentLoaded", function () {
   let dataForm = document.forms["data-form"];
-  // console.log(dataForm);
   dataForm.addEventListener("submit", getDataForm);
-
-  // let dataSubmit = document.getElementById("submitButton");
-  // dataSubmit.addEventListener("click", getDataForm);
 
   function getDataForm(event) {
     let index = getMaxId();
@@ -218,7 +208,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ) {
       if (!document.getElementById("name").value) {
         alertName.style.display = "block";
-        // console.log("Please insert your name");
       } else {
         alertName.style.display = "none";
       }
@@ -272,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
           height: heightData,
           gender: genderData,
         };
-        // console.log("Hit edit");
+
         editFlag = false;
         document.getElementById("submitButton").style.display = "block";
         document.getElementById("editButton").style.display = "none";
@@ -289,10 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
           height: heightData,
           gender: genderData,
         };
-        // console.log("Hit submit");
         setObjectInLocalStorage(index, dataToStorage);
-        // console.log(index, "index");
-        //   Adding the index manually
       }
 
       // Documenting the data
@@ -301,7 +287,6 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("weight").value = "";
       document.getElementById("height").value = "";
       document.getElementById("gender").value = "";
-      // console.log(formDataObject);
       cetakData();
     }
   }
@@ -313,7 +298,12 @@ document.addEventListener("DOMContentLoaded", function () {
 function cetakData() {
   render();
   document.getElementById("dataTable").innerHTML = "";
-  // console.log(dataShow, "< data show");
+
+  // sort by ID
+  dataShow.sort(function (a, b) {
+    return b.id - a.id;
+  });
+
   for (let i = 0; i < dataShow.length; i++) {
     let data = dataShow[i];
     let Name = `<td class="px-3 py-4 whitespace-no-wrap">${data.name}</td>`;
@@ -366,7 +356,6 @@ function updateFunction(id) {
     document.getElementById("editButton").style.display = "block";
 
     data = JSON.parse(data);
-    // console.log(data);
 
     document.getElementById("name").value = `${data.name}`;
     document.getElementById("age").value = `${data.age}`;
@@ -387,12 +376,8 @@ function getAllDataFromStorage() {
   return data;
 }
 
-// let allData = getAllDataFromStorage();
-// console.log(allData, "data");
-
 function sortingBy() {
   let sorting = document.getElementById("sortBMI").value;
-  // console.log(dataShow);
   if (sorting.length > 0) {
     if (sorting == "asc") {
       dataShow.sort(function (a, b) {
@@ -405,10 +390,8 @@ function sortingBy() {
     }
 
     document.getElementById("dataTable").innerHTML = "";
-    // console.log(dataShow, "< data show");
     for (let i = 0; i < dataShow.length; i++) {
       let data = dataShow[i];
-      // console.log(data, "< data");
       let Name = `<td class="px-6 py-4 whitespace-no-wrap">${data.name}</td>`;
       let bmi = `<td class="px-3 py-2">${data.bmi}</td>`;
       let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
@@ -429,9 +412,7 @@ function sortingBy() {
 
 function findName() {
   let searchData = document.getElementById("Search").value;
-  // console.log(searchData.value);
 
-  // console.log(searchData, "<SEARCH");
   let object = dataShow.filter(function (data) {
     let lowerCase = data.name.toLowerCase();
 
@@ -439,11 +420,9 @@ function findName() {
   });
 
   if (object.length > 0) {
-    // console.log("Jackpot");
     document.getElementById("dataTable").innerHTML = "";
     for (let i = 0; i < object.length; i++) {
       let data = object[i];
-      // console.log(object, "< object data");
       let Name = `<td class="px-6 py-4 whitespace-no-wrap">${data.name}</td>`;
       let bmi = `<td class="px-3 py-2">${data.bmi}</td>`;
       let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
