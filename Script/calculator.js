@@ -10,6 +10,7 @@ function render() {
     dataShow.push(value);
   }
 }
+
 render();
 console.log(dataShow);
 
@@ -216,13 +217,15 @@ document.addEventListener("DOMContentLoaded", function () {
       let weightData = document.getElementById("weight").value;
       let heightData = document.getElementById("height").value;
       let genderData = document.getElementById("gender").value;
-      let dataBMI = calculateBMI();
+      let dataBMI = calculateBMI(ageData, weightData, heightData, genderData);
 
       //   saving data into local storage
       let dataToStorage = {
         id: index.toString(),
         name: nameData,
         age: ageData,
+        bmi: dataBMI[0],
+        message: dataBMI[1],
         weight: weightData,
         height: heightData,
         gender: genderData,
@@ -252,6 +255,12 @@ function getAllDataFromStorage() {
   }
   return data;
 }
+
+function cetak() {
+  document.getElementById("isi-data-table").innerHTML = "";
+}
+
+cetak();
 
 // printing datanya
 // function printData(){
