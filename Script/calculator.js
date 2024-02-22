@@ -1,4 +1,3 @@
-let error = false;
 let editFlag = false;
 
 // if (localStorage.length == 1) {
@@ -20,6 +19,21 @@ function render() {
     dataShow.push(value);
   }
 }
+
+function getMaxId() {
+  let result = 0;
+  for (let i = 0; i < localStorage.length; i++) {
+    let key = localStorage.key(i);
+    let value = localStorage.getItem(key);
+    value = JSON.parse(value);
+    if (value.id > result) {
+      result = value.id;
+    }
+  }
+  return result;
+}
+
+console.log(getMaxId());
 
 render();
 // console.log(dataShow);
@@ -107,7 +121,7 @@ function calculateBMI(age, weight, height, gender) {
       // {tinggi badan (cm) – 100} – {(tinggi badan (cm) – 100) x 10%}
       // todo ideal weight
       let idealWeightBMI = height - 100 - (height - 100) * 0.1;
-      console.log(idealWeightBMI);
+      // console.log(idealWeightBMI);
       if (calculateBMI < 18) {
         // underweight
         let messageResult =
@@ -134,7 +148,7 @@ function calculateBMI(age, weight, height, gender) {
       // {tinggi badan (cm) – 100} – {(tinggi badan (cm) - 100) x 15%}
       // todo ideal weight
       let idealWeightBMI = height - 100 - (height - 100) * 0.15;
-      console.log(idealWeightBMI);
+      // console.log(idealWeightBMI);
       if (calculateBMI < 18) {
         // underweight
         let messageResult =
@@ -174,7 +188,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // dataSubmit.addEventListener("click", getDataForm);
 
   function getDataForm(event) {
-    let index = localStorage.length + 1;
+    let index = getMaxId();
+    index++;
     console.log(localStorage.length, "Length local storage");
     event.preventDefault();
     let form = document.forms["data-form"];
@@ -201,22 +216,31 @@ document.addEventListener("DOMContentLoaded", function () {
       !document.getElementById("height").value ||
       !document.getElementById("gender").value
     ) {
-      error = true;
       if (!document.getElementById("name").value) {
         alertName.style.display = "block";
-        console.log("Please insert your name");
+        // console.log("Please insert your name");
+      } else {
+        alertName.style.display = "none";
       }
       if (!document.getElementById("age").value) {
         alertAge.style.display = "block";
+      } else {
+        alertAge.style.display = "none";
       }
       if (!document.getElementById("weight").value) {
         alertWeight.style.display = "block";
+      } else {
+        alertWeight.style.display = "none";
       }
       if (!document.getElementById("height").value) {
         alertHeight.style.display = "block";
+      } else {
+        alertHeight.style.display = "none";
       }
       if (!document.getElementById("gender").value) {
         alertGender.style.display = "block";
+      } else {
+        alertGender.style.display = "none";
       }
     } else {
       // Logging form data object
@@ -265,9 +289,9 @@ document.addEventListener("DOMContentLoaded", function () {
           height: heightData,
           gender: genderData,
         };
-        console.log("Hit submit");
+        // console.log("Hit submit");
         setObjectInLocalStorage(index, dataToStorage);
-        console.log(index, "index");
+        // console.log(index, "index");
         //   Adding the index manually
       }
 
@@ -277,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("weight").value = "";
       document.getElementById("height").value = "";
       document.getElementById("gender").value = "";
-      console.log(formDataObject);
+      // console.log(formDataObject);
       cetakData();
     }
   }
@@ -289,11 +313,11 @@ document.addEventListener("DOMContentLoaded", function () {
 function cetakData() {
   render();
   document.getElementById("dataTable").innerHTML = "";
-  console.log(dataShow, "< data show");
+  // console.log(dataShow, "< data show");
   for (let i = 0; i < dataShow.length; i++) {
     let data = dataShow[i];
-    let Name = `<td class="px-6 py-4 whitespace-no-wrap">${data.name}</td>`;
-    let bmi = `<td>${data.bmi}</td>`;
+    let Name = `<td class="px-3 py-4 whitespace-no-wrap">${data.name}</td>`;
+    let bmi = `<td class="px-3 py-2">${data.bmi}</td>`;
     let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
     let btnAction = `<td class="flex px-3 py-4 whitespace-no-wrap">
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
@@ -342,7 +366,7 @@ function updateFunction(id) {
     document.getElementById("editButton").style.display = "block";
 
     data = JSON.parse(data);
-    console.log(data);
+    // console.log(data);
 
     document.getElementById("name").value = `${data.name}`;
     document.getElementById("age").value = `${data.age}`;
@@ -368,7 +392,7 @@ function getAllDataFromStorage() {
 
 function sortingBy() {
   let sorting = document.getElementById("sortBMI").value;
-  console.log(dataShow);
+  // console.log(dataShow);
   if (sorting.length > 0) {
     if (sorting == "asc") {
       dataShow.sort(function (a, b) {
@@ -381,12 +405,12 @@ function sortingBy() {
     }
 
     document.getElementById("dataTable").innerHTML = "";
-    console.log(dataShow, "< data show");
+    // console.log(dataShow, "< data show");
     for (let i = 0; i < dataShow.length; i++) {
       let data = dataShow[i];
-      console.log(data, "< data");
+      // console.log(data, "< data");
       let Name = `<td class="px-6 py-4 whitespace-no-wrap">${data.name}</td>`;
-      let bmi = `<td>${data.bmi}</td>`;
+      let bmi = `<td class="px-3 py-2">${data.bmi}</td>`;
       let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
       let btnAction = `<td class="flex px-3 py-4 whitespace-no-wrap">
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
@@ -407,7 +431,7 @@ function findName() {
   let searchData = document.getElementById("Search").value;
   // console.log(searchData.value);
 
-  console.log(searchData, "<SEARCH");
+  // console.log(searchData, "<SEARCH");
   let object = dataShow.filter(function (data) {
     let lowerCase = data.name.toLowerCase();
 
@@ -419,9 +443,9 @@ function findName() {
     document.getElementById("dataTable").innerHTML = "";
     for (let i = 0; i < object.length; i++) {
       let data = object[i];
-      console.log(object, "< object data");
+      // console.log(object, "< object data");
       let Name = `<td class="px-6 py-4 whitespace-no-wrap">${data.name}</td>`;
-      let bmi = `<td>${data.bmi}</td>`;
+      let bmi = `<td class="px-3 py-2">${data.bmi}</td>`;
       let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
       let btnAction = `<td class="flex px-3 py-4 whitespace-no-wrap">
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
