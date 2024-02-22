@@ -1,6 +1,11 @@
-let index = localStorage.length;
 let error = false;
+let editFlag = false;
 
+// if (localStorage.length == 1) {
+//   index++;
+// }
+
+// array of object
 let dataShow = [];
 // localStorage.removeItem("0");
 // localStorage.removeItem("1");
@@ -162,10 +167,15 @@ function calculateBMI(age, weight, height, gender) {
 
 document.addEventListener("DOMContentLoaded", function () {
   let dataForm = document.forms["data-form"];
-  console.log(dataForm);
+  // console.log(dataForm);
   dataForm.addEventListener("submit", getDataForm);
 
+  // let dataSubmit = document.getElementById("submitButton");
+  // dataSubmit.addEventListener("click", getDataForm);
+
   function getDataForm(event) {
+    let index = localStorage.length + 1;
+    console.log(localStorage.length, "Length local storage");
     event.preventDefault();
     let form = document.forms["data-form"];
 
@@ -225,20 +235,41 @@ document.addEventListener("DOMContentLoaded", function () {
       let dataBMI = calculateBMI(ageData, weightData, heightData, genderData);
 
       //   saving data into local storage
-      let dataToStorage = {
-        id: index.toString(),
-        name: nameData,
-        age: ageData,
-        bmi: dataBMI[0],
-        message: dataBMI[1],
-        weight: weightData,
-        height: heightData,
-        gender: genderData,
-      };
 
-      setObjectInLocalStorage(index, dataToStorage);
-      //   Adding the index manually
-      index++;
+      if (editFlag) {
+        let id = document.getElementById("index").value;
+        let dataToStorage = {
+          id: id.toString(),
+          name: nameData,
+          age: ageData,
+          bmi: dataBMI[0],
+          message: dataBMI[1],
+          weight: weightData,
+          height: heightData,
+          gender: genderData,
+        };
+        // console.log("Hit edit");
+        editFlag = false;
+        document.getElementById("submitButton").style.display = "block";
+        document.getElementById("editButton").style.display = "none";
+        setObjectInLocalStorage(id, dataToStorage);
+        document.getElementById("index").value = 0;
+      } else {
+        let dataToStorage = {
+          id: index.toString(),
+          name: nameData,
+          age: ageData,
+          bmi: dataBMI[0],
+          message: dataBMI[1],
+          weight: weightData,
+          height: heightData,
+          gender: genderData,
+        };
+        console.log("Hit submit");
+        setObjectInLocalStorage(index, dataToStorage);
+        console.log(index, "index");
+        //   Adding the index manually
+      }
 
       // Documenting the data
       document.getElementById("name").value = "";
@@ -252,11 +283,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   cetakData();
-  // Delete Data jika kepanggil
-
-  // let buttonDelete = document.getElementById("deleteButton");
-  // buttonDelete.addEventListener("submit", deleteFunction);
-  // console.log(buttonDelete, "Delete Button");
 });
 
 // Testing print data
@@ -282,32 +308,69 @@ function cetakData() {
 }
 
 function deleteFunction(id) {
+  if (editFlag) {
+    editFlag = false;
+    document.getElementById("submitButton").style.display = "block";
+    document.getElementById("editButton").style.display = "none";
+
+    document.getElementById("name").value = ``;
+    document.getElementById("age").value = ``;
+    document.getElementById("weight").value = ``;
+    document.getElementById("height").value = ``;
+    document.getElementById("gender").value = ``;
+  }
   localStorage.removeItem(id.toString());
   render();
   cetakData();
 }
 
-function getAllDataFromStorage() {
-  let data = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    let key = localStorage.key(i);
-    let value = localStorage.getItem(key);
-    data[key] = value;
+function updateFunction(id) {
+  if (editFlag) {
+    editFlag = false;
+    document.getElementById("submitButton").style.display = "block";
+    document.getElementById("editButton").style.display = "none";
+
+    document.getElementById("name").value = ``;
+    document.getElementById("age").value = ``;
+    document.getElementById("weight").value = ``;
+    document.getElementById("height").value = ``;
+    document.getElementById("gender").value = ``;
+  } else {
+    editFlag = true;
+    let data = localStorage.getItem(id.toString());
+
+    document.getElementById("submitButton").style.display = "none";
+    document.getElementById("editButton").style.display = "block";
+
+    data = JSON.parse(data);
+    console.log(data);
+
+    document.getElementById("name").value = `${data.name}`;
+    document.getElementById("age").value = `${data.age}`;
+    document.getElementById("weight").value = `${data.weight}`;
+    document.getElementById("height").value = `${data.height}`;
+    document.getElementById("gender").value = `${data.gender}`;
+    document.getElementById("index").value = id;
   }
-  return data;
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let editButton = document.getElementById(editButton);
+    editButton.addEventListener("click", function (event) {
+      event.preventDefault;
+      console.log("Click");
+    });
+  });
+
+  function getAllDataFromStorage() {
+    let data = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      let value = localStorage.getItem(key);
+      data[key] = value;
+    }
+    return data;
+  }
+
+  // let allData = getAllDataFromStorage();
+  // console.log(allData, "data");
 }
-
-document.addEventListener("DOMContentLoaded", function () {});
-
-// cetak();
-
-// printing datanya
-// function printData(){
-
-// }
-
-// let value = localStorage.getItem("1");
-// console.log(value, "value");
-
-let allData = getAllDataFromStorage();
-console.log(allData, "data");
