@@ -91,10 +91,10 @@
                 <input type="text" id="Search" name="Search" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Search Name">
             </div>
             <div class="flex w-1/4 justify-center items-center mt-2">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Search</button>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="findName()">Search</button>
             </div>
             <div class="flex justify-center items-center mt-2">
-                <select class="w-28 h-10 ml-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <select onchange="sortingBy()" class="w-28 h-10 ml-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="sortBMI" >
                     <option value = "">BMI Order</option>
                     <option value="asc">Ascending</option>
                     <option value="desc">Descending</option>

@@ -287,12 +287,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Testing print data
 function cetakData() {
-  document.getElementById("dataTable").innerHTML = "";
   render();
+  document.getElementById("dataTable").innerHTML = "";
   console.log(dataShow, "< data show");
   for (let i = 0; i < dataShow.length; i++) {
     let data = dataShow[i];
-    console.log(data, "< data");
     let Name = `<td class="px-6 py-4 whitespace-no-wrap">${data.name}</td>`;
     let bmi = `<td>${data.bmi}</td>`;
     let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
@@ -352,25 +351,89 @@ function updateFunction(id) {
     document.getElementById("gender").value = `${data.gender}`;
     document.getElementById("index").value = id;
   }
+}
 
-  document.addEventListener("DOMContentLoaded", function () {
-    let editButton = document.getElementById(editButton);
-    editButton.addEventListener("click", function (event) {
-      event.preventDefault;
-      console.log("Click");
-    });
+function getAllDataFromStorage() {
+  let data = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    let key = localStorage.key(i);
+    let value = localStorage.getItem(key);
+    data[key] = value;
+  }
+  return data;
+}
+
+// let allData = getAllDataFromStorage();
+// console.log(allData, "data");
+
+function sortingBy() {
+  let sorting = document.getElementById("sortBMI").value;
+  console.log(dataShow);
+  if (sorting.length > 0) {
+    if (sorting == "asc") {
+      dataShow.sort(function (a, b) {
+        return a.bmi - b.bmi;
+      });
+    } else if (sorting == "desc") {
+      dataShow.sort(function (a, b) {
+        return b.bmi - a.bmi;
+      });
+    }
+
+    document.getElementById("dataTable").innerHTML = "";
+    console.log(dataShow, "< data show");
+    for (let i = 0; i < dataShow.length; i++) {
+      let data = dataShow[i];
+      console.log(data, "< data");
+      let Name = `<td class="px-6 py-4 whitespace-no-wrap">${data.name}</td>`;
+      let bmi = `<td>${data.bmi}</td>`;
+      let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
+      let btnAction = `<td class="flex px-3 py-4 whitespace-no-wrap">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
+    <button id="deleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="deleteFunction(${data.id})">Delete</button>
+    </td>`;
+
+      document.getElementById(
+        "dataTable"
+      ).innerHTML += `<tr>${Name}${bmi}${message}${btnAction}</tr>`;
+    }
+  } else {
+    render();
+    cetakData();
+  }
+}
+
+function findName() {
+  let searchData = document.getElementById("Search").value;
+  // console.log(searchData.value);
+
+  console.log(searchData, "<SEARCH");
+  let object = dataShow.filter(function (data) {
+    let lowerCase = data.name.toLowerCase();
+
+    return lowerCase.includes(searchData);
   });
 
-  function getAllDataFromStorage() {
-    let data = {};
-    for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
-      let value = localStorage.getItem(key);
-      data[key] = value;
+  if (object.length > 0) {
+    // console.log("Jackpot");
+    document.getElementById("dataTable").innerHTML = "";
+    for (let i = 0; i < object.length; i++) {
+      let data = object[i];
+      console.log(object, "< object data");
+      let Name = `<td class="px-6 py-4 whitespace-no-wrap">${data.name}</td>`;
+      let bmi = `<td>${data.bmi}</td>`;
+      let message = `<td class="px-8 py-4 whitespace-wrap">${data.message} </td>`;
+      let btnAction = `<td class="flex px-3 py-4 whitespace-no-wrap">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onclick="updateFunction(${data.id})" >Edit</button>
+    <button id="deleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="deleteFunction(${data.id})">Delete</button>
+    </td>`;
+      document.getElementById(
+        "dataTable"
+      ).innerHTML += `<tr>${Name}${bmi}${message}${btnAction}</tr>`;
     }
-    return data;
-  }
 
-  // let allData = getAllDataFromStorage();
-  // console.log(allData, "data");
+    document.getElementById("Search").value = "";
+  } else {
+    cetakData();
+  }
 }
