@@ -415,7 +415,7 @@ function findName() {
 
   let object = dataShow.filter(function (data) {
     let lowerCase = data.name.toLowerCase();
-
+    searchData = searchData.toLowerCase();
     return lowerCase.includes(searchData);
   });
 
